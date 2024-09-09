@@ -93,7 +93,7 @@ const App = () => {
 
     return (
         <div>
-            <h1>Trage Game</h1>
+            <h1>Trade Game</h1>
             {!gameStarted ? (
                 <div>
                     <h2>Enter starting amount</h2>
