@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/trade-game/static/css/main.39a443ca.css",
+    "main.js": "/trade-game/static/js/main.2227542c.js",
+    "index.html": "/trade-game/index.html",
+    "main.39a443ca.css.map": "/trade-game/static/css/main.39a443ca.css.map",
+    "main.2227542c.js.map": "/trade-game/static/js/main.2227542c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.39a443ca.css",
+    "static/js/main.2227542c.js"
+  ]
+}
