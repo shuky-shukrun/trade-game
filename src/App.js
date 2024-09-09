@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './styles.css'; // Import the new styles
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,25 +9,23 @@ const App = () => {
     const [message, setMessage] = useState('');
     const [gameOver, setGameOver] = useState(false);
     const [tradeCount, setTradeCount] = useState(0);
-    const [tradeHistory, setTradeHistory] = useState([]); // State to track trade history
-    const [gameStarted, setGameStarted] = useState(false); // New state to track if the game has started
+    const [tradeHistory, setTradeHistory] = useState([]);
+    const [gameStarted, setGameStarted] = useState(false);
 
-    // Function to handle starting the game
     const handleStart = () => {
         const amount = parseFloat(startingAmount);
         if (amount > 0) {
             setBalance(amount);
             setMessage(`Game started with $${amount}`);
             setStartingAmount('');
-            setTradeCount(0); // Reset trade count
-            setTradeHistory([]); // Reset trade history when the game starts
-            setGameStarted(true); // Set game as started
+            setTradeCount(0);
+            setTradeHistory([]);
+            setGameStarted(true);
         } else {
             setMessage('Please enter a valid starting amount.');
         }
     };
 
-    // Function to handle each trade
     const handleTrade = () => {
         const tradeValue = parseFloat(tradeAmount);
         if (tradeValue > balance || tradeValue <= 0) {
@@ -77,10 +74,9 @@ const App = () => {
             setGameOver(true);
         }
 
-        setTradeAmount(''); // Reset trade amount after each trade
+        setTradeAmount('');
     };
 
-    // Function to reset the game
     const resetGame = () => {
         setBalance(0);
         setTradeAmount('');
@@ -88,43 +84,60 @@ const App = () => {
         setGameOver(false);
         setTradeCount(0);
         setTradeHistory([]);
-        setGameStarted(false); // Reset game started state
+        setGameStarted(false);
     };
 
     return (
-        <div className="container">
-            <h1>Trade Game</h1>
+        <div className="container my-5">
+            <h1 className="text-center mb-4">Trade Game</h1>
             {!gameStarted ? (
-                <div>
-                    <h2>Enter starting amount</h2>
-                    <input
-                        type="number"
-                        value={startingAmount}
-                        onChange={(e) => setStartingAmount(e.target.value)}
-                    />
-                    <button onClick={handleStart}>Start Game</button>
-                    <p>{message}</p>
+                <div className="text-center">
+                    <h2>Enter Starting Amount</h2>
+                    <div className="row justify-content-center mb-3">
+                        <div className="col-6 col-md-4">
+                            <input
+                                type="number"
+                                className="form-control"
+                                value={startingAmount}
+                                onChange={(e) => setStartingAmount(e.target.value)}
+                                placeholder="Enter amount"
+                            />
+                        </div>
+                    </div>
+                    <button className="btn btn-primary" onClick={handleStart}>
+                        Start Game
+                    </button>
+                    <p className="mt-3 text-danger">{message}</p>
                 </div>
             ) : (
                 <div>
-                    <h2>Current Balance: ${balance}</h2>
-                    <h3>Number of Trades: {tradeCount}</h3>
-                    <input
-                        type="number"
-                        value={tradeAmount}
-                        onChange={(e) => setTradeAmount(e.target.value)}
-                        disabled={gameOver}
-                    />
-                    <button onClick={handleTrade} disabled={gameOver}>
-                        Trade
-                    </button>
-                    <button onClick={resetGame}>Reset Game</button>
-                    <p>{message}</p>
+                    <div className="text-center mb-4">
+                        <h2>Current Balance: ${balance}</h2>
+                        <h3>Number of Trades: {tradeCount}</h3>
+                        <div className="row justify-content-center mb-3">
+                            <div className="col-6 col-md-4">
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    value={tradeAmount}
+                                    onChange={(e) => setTradeAmount(e.target.value)}
+                                    placeholder="Enter trade amount"
+                                    disabled={gameOver}
+                                />
+                            </div>
+                        </div>
+                        <button className="btn btn-success me-2" onClick={handleTrade} disabled={gameOver}>
+                            Trade
+                        </button>
+                        <button className="btn btn-secondary" onClick={resetGame}>
+                            Reset Game
+                        </button>
+                        <p className="mt-3 text-danger">{message}</p>
+                    </div>
 
-                    {/* Trade Summary Table */}
                     {tradeHistory.length > 0 && (
-                        <table>
-                            <thead>
+                        <table className="table table-bordered table-striped">
+                            <thead className="table-dark">
                                 <tr>
                                     <th>Trade Count</th>
                                     <th>Starting Balance</th>
@@ -143,7 +156,7 @@ const App = () => {
                                         <td className={`trade-status ${trade.outcome.toLowerCase()}`}>
                                             <FontAwesomeIcon
                                                 icon={trade.outcome === 'Win' ? faArrowUp : faArrowDown}
-                                                className="icon"
+                                                className={`me-1 ${trade.outcome === 'Win' ? 'text-success' : 'text-danger'}`}
                                             />
                                             {trade.outcome}
                                         </td>
